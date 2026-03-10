@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ SHOP_NAME }} - Quality Bike Spare Parts</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="{% url 'products:list' %}" class="logo">
+                <span>{{ SHOP_NAME }}</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="{% url 'products:list' %}">Home</a>
+                <a href="{% url 'products:list' %}#products">Products</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>About Us</h3>
+                    <p>Reliable spare parts for every ride. We provide high-quality, genuine parts for all major bike
+                        brands.</p>
+                </div>
+                <div>
+                    <h3>Contact Info</h3>
+                    <p>Address: Main Market, City</p>
+                    <p>Phone: +{{ SHOP_OWNER_PHONE }}</p>
+                    <p>WhatsApp: +{{ SHOP_OWNER_PHONE }}</p>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <p><a href="{% url 'products:list' %}">Browse Parts</a></p>
+                    <p><a href="{% url 'products:list' %}#products">Products</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {% now "Y" %} {{ SHOP_NAME }}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
