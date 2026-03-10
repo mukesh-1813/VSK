@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% load static %}
 
@@ -75,4 +76,83 @@
         {% endfor %}
     </div>
 </section>
+=======
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero animate">
+    <div class="container">
+        <h1>Quality Bike Spare Parts</h1>
+        <p>Reliable spare parts for every ride. Genuine components for peak performance.</p>
+        <a href="#products" class="btn btn-primary">Browse Products</a>
+    </div>
+</section>
+
+<!-- Categories Section (Optional/Static per user design) -->
+<section class="container" style="padding: 60px 0 0;" id="categories">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h2>Shop by Category</h2>
+    </div>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px;">
+        <a href="?" class="btn" style="background: var(--primary); color: white;">All Parts</a>
+        <a href="?category=Engine Parts" class="btn"
+            style="background: white; border: 1px solid var(--border-color); color: var(--primary);">Engine Parts</a>
+        <a href="?category=Brake Parts" class="btn"
+            style="background: white; border: 1px solid var(--border-color); color: var(--primary);">Brake Parts</a>
+        <a href="?category=Electrical Parts" class="btn"
+            style="background: white; border: 1px solid var(--border-color); color: var(--primary);">Electrical
+            Parts</a>
+        <a href="?category=Body Parts" class="btn"
+            style="background: white; border: 1px solid var(--border-color); color: var(--primary);">Body Parts</a>
+        <a href="?category=Accessories" class="btn"
+            style="background: white; border: 1px solid var(--border-color); color: var(--primary);">Accessories</a>
+    </div>
+</section>
+
+<!-- Products Grid -->
+<section class="container" id="products">
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card animate">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
+            {% else %}
+            <div
+                style="width: 100%; height: 220px; background: #E2E8F0; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                <span style="color: #94A3B8;">No Image</span>
+            </div>
+            {% endif %}
+
+            <div class="product-info">
+                <!-- Using static category tag since model doesn't have it yet -->
+                <span
+                    style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">Spare
+                    Part</span>
+                <h3 style="margin-top: 8px;">{{ product.name }}</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <p class="product-price" style="margin: 0;">₹{{ product.price }}</p>
+                    {% if product.stock > 0 %}
+                    <span style="color: #10B981; font-size: 13px; font-weight: 600;">In Stock</span>
+                    {% else %}
+                    <span style="color: #EF4444; font-size: 13px; font-weight: 600;">Out of Stock</span>
+                    {% endif %}
+                </div>
+                <p class="product-desc">{{ product.description|truncatewords:15 }}</p>
+            </div>
+
+            <!-- Link to our order form, named orders:form -->
+            <a href="{% url 'orders:form' product.id %}" class="btn btn-primary"
+                style="width: 100%; text-align: center;">View & Order</a>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 100px 0;">
+            <h3>No products found.</h3>
+            <p>Check back later or try another category.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+>>>>>>> 2dbe7600888bc565120e0649791a2e0c2e74f80c
 {% endblock %}

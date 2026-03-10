@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block title %}Order Confirmed - {{ SHOP_NAME }}{% endblock %}
@@ -84,4 +85,92 @@
         }, 1500);
     });
 </script>
+=======
+{% extends 'base.html' %}
+
+{% block title %}Order Confirmed - {{ SHOP_NAME }}{% endblock %}
+
+{% block content %}
+<section class="success">
+    <div class="container">
+        <div class="success-box">
+
+            <div style="font-size: 4.5rem; margin-bottom: 20px; animation: pop 0.4s ease;">✅</div>
+            <h1 class="success-title">Order Submitted!</h1>
+            <p class="success-text" style="font-size: 1.05rem; max-width: 400px; margin-inline: auto;">
+                Your order details are ready to send. You will now be redirected to WhatsApp.
+            </p>
+
+            <!-- Order Summary embedded in the success box -->
+            <div
+                style="background: var(--bg); border: 1px solid var(--border); padding: 20px; border-radius: 8px; text-align: left; margin-bottom: 30px;">
+                <h4
+                    style="font-size: 0.8rem; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; letter-spacing: 0.5px;">
+                    Order Summary (#{{ order.order_id }})</h4>
+
+                <div
+                    style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border); padding-bottom: 8px; margin-bottom: 8px;">
+                    <span style="color: var(--muted); font-size: 0.9rem;">Product</span>
+                    <strong style="text-align: right; max-width: 60%;">{{ order.product_name }}</strong>
+                </div>
+
+                <div
+                    style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border); padding-bottom: 8px; margin-bottom: 8px;">
+                    <span style="color: var(--muted); font-size: 0.9rem;">Quantity</span>
+                    <strong>{{ order.quantity }}</strong>
+                </div>
+
+                <div
+                    style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border); padding-bottom: 8px; margin-bottom: 12px;">
+                    <span style="color: var(--muted); font-size: 0.9rem;">Customer</span>
+                    <strong style="text-align: right; max-width: 60%;">{{ order.customer_name }}</strong>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                    <span style="font-weight: 600;">Total Estimate</span>
+                    <strong style="color: var(--accent); font-size: 1.25rem;">₹{{ order.total }}</strong>
+                </div>
+            </div>
+
+            <a href="{{ order.whatsapp_url }}" id="wa-link" target="_blank" rel="noopener" class="btn btn-primary"
+                style="display: block; width: 100%; padding: 16px; font-size: 1.1rem; border-radius: 8px; text-align: center;">
+                💬 Open WhatsApp Now
+            </a>
+
+            <a href="/"
+                style="display: inline-block; margin-top: 24px; color: var(--muted); font-weight: 500; font-size: 0.95rem; text-decoration: none;">
+                ← Back to Catalog
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes pop {
+        0% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        // Slight delay so the user understands what's happening
+        setTimeout(() => {
+            const waLink = document.getElementById('wa-link');
+            if (waLink) waLink.click();
+        }, 1500);
+    });
+</script>
+>>>>>>> 2dbe7600888bc565120e0649791a2e0c2e74f80c
 {% endblock %}
