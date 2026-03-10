@@ -106,7 +106,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ──────────────────────────────────────────────────────────────────────────────
 # Shop-specific settings (loaded from .env)
 # ──────────────────────────────────────────────────────────────────────────────
-SHOP_OWNER_PHONE = os.getenv('SHOP_OWNER_PHONE', '919876543210')
+SHOP_OWNER_PHONE = os.getenv('SHOP_OWNER_PHONE', '917816029037')
 SHOP_NAME = os.getenv('SHOP_NAME', 'VSK Bike Spare Parts')
 
 # ──────────────────────────────────────────────────────────────────────────────

@@ -77,11 +77,16 @@
 
 <script>
     window.addEventListener('DOMContentLoaded', () => {
-        // Slight delay so the user understands what's happening
+        const waLink = document.getElementById('wa-link');
+
+        // Use a 2-second delay to let the user see the confirmation first
         setTimeout(() => {
-            const waLink = document.getElementById('wa-link');
-            if (waLink) waLink.click();
-        }, 1500);
+            if (waLink) {
+                // Changing location.href in the same tab is much less likely 
+                // to be blocked by 'popup blockers' than click() + target="_blank"
+                window.location.href = waLink.href;
+            }
+        }, 2000);
     });
 </script>
 {% endblock %}
