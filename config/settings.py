@@ -20,6 +20,14 @@ DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
+# Automatically allow all Render subdomains
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# Also allow the wildcard .onrender.com to be safe
+ALLOWED_HOSTS.append('.onrender.com')
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
