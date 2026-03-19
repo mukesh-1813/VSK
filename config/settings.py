@@ -73,7 +73,6 @@ import dj_database_url
 database_url = os.getenv('DATABASE_URL')
 
 if database_url:
-    print("DEBUG: DATABASE_URL found. Initializing PostgreSQL configuration.")
     DATABASES = {
         'default': dj_database_url.config(
             default=database_url,
@@ -82,7 +81,6 @@ if database_url:
         )
     }
 else:
-    print("DEBUG: DATABASE_URL NOT found. Checking individual DB settings.")
     # Fallback to local individual settings or SQLite
     DATABASES = {
         'default': {
@@ -97,13 +95,10 @@ else:
     
     # Final fallback to SQLite if individual PostgreSQL settings are also missing
     if not os.getenv('DB_NAME'):
-        print("DEBUG: DB_NAME NOT found. Falling back to SQLite.")
         DATABASES['default'] = {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
-    else:
-        print(f"DEBUG: DB_NAME found ({os.getenv('DB_NAME')}). Using individual PostgreSQL settings.")
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
