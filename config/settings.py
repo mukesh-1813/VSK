@@ -18,8 +18,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key-change-in-pro
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-# For Render deployment, allow all hosts to avoid subdomain issues
-ALLOWED_HOSTS = ['*']
+# For Render deployment, allow specific hosts
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -66,13 +66,39 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database – SQLite is sufficient for a small retail shop
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+import dj_database_url
+
+# Database configuration
+# Prioritize DATABASE_URL (standard for Render/Heroku)
+database_url = os.getenv('DATABASE_URL')
+
+if database_url:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=database_url,
+            conn_max_age=600,
+            ssl_require=True
+        )
     }
-}
+else:
+    # Fallback to local individual settings or SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME', 'VSK'),
+            'USER': os.getenv('DB_USER', 'owner'),
+            'PASSWORD': os.getenv('DB_PASSWORD', 'owner'),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '5432'),
+        }
+    }
+    
+    # Final fallback to SQLite if individual PostgreSQL settings are also missing
+    if not os.getenv('DB_NAME'):
+        DATABASES['default'] = {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
