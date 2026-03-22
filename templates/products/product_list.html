@@ -37,35 +37,39 @@
     <div class="product-grid">
         {% for product in products %}
         <div class="product-card animate">
+            <!-- UI/UX IMPROVEMENT: Image sits flush at the top due to card's overflow: hidden -->
             {% if product.image %}
             <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
             {% else %}
-            <div
-                style="width: 100%; height: 220px; background: #E2E8F0; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+            <!-- UI/UX IMPROVEMENT: Replaced inline styles with a reusable class -->
+            <div class="product-img-placeholder">
                 <span style="color: #94A3B8;">No Image</span>
             </div>
             {% endif %}
 
-            <div class="product-info">
-                <!-- Using static category tag since model doesn't have it yet -->
-                <span
-                    style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">Spare
-                    Part</span>
-                <h3 style="margin-top: 8px;">{{ product.name }}</h3>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <p class="product-price" style="margin: 0;">₹{{ product.price }}</p>
-                    {% if product.stock > 0 %}
-                    <span style="color: #10B981; font-size: 13px; font-weight: 600;">In Stock</span>
-                    {% else %}
-                    <span style="color: #EF4444; font-size: 13px; font-weight: 600;">Out of Stock</span>
-                    {% endif %}
+            <!-- UI/UX IMPROVEMENT: Added a content wrapper to handle consistent padding for all text/buttons within the card. -->
+            <div class="product-content">
+                <div class="product-info">
+                    <!-- Using static category tag since model doesn't have it yet -->
+                    <span
+                        style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">Spare
+                        Part</span>
+                    <h3 style="margin-top: 8px;">{{ product.name }}</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <p class="product-price" style="margin: 0;">₹{{ product.price }}</p>
+                        {% if product.stock > 0 %}
+                        <span style="color: #10B981; font-size: 13px; font-weight: 600;">In Stock</span>
+                        {% else %}
+                        <span style="color: #EF4444; font-size: 13px; font-weight: 600;">Out of Stock</span>
+                        {% endif %}
+                    </div>
+                    <p class="product-desc">{{ product.description|truncatewords:15 }}</p>
                 </div>
-                <p class="product-desc">{{ product.description|truncatewords:15 }}</p>
-            </div>
 
-            <!-- Link to our order form, named orders:form -->
-            <a href="{% url 'orders:form' product.id %}" class="btn btn-primary"
-                style="width: 100%; text-align: center;">View & Order</a>
+                <!-- Link to our order form, named orders:form -->
+                <a href="{% url 'orders:form' product.id %}" class="btn btn-primary"
+                    style="width: 100%; text-align: center;">View & Order</a>
+            </div>
         </div>
         {% empty %}
         <div style="grid-column: 1/-1; text-align: center; padding: 100px 0;">
